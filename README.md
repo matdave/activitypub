@@ -33,8 +33,7 @@ Paginated collection of replies made to an article
 Followers are a list of user IDs (e.g. https://otherserver/users/followername) that are following the Actor
 
 ### Inbox
-Used for handling incoming interactions with Actor, e.g. post comments, follow
-https://seb.jambor.dev/posts/understanding-activitypub/
+Used for handling incoming interactions with Actor, e.g. post comments, follow actor
 
 ### Dispatch
 This isn't an endpoint but the hidden glue that makes it all work. The server will dispatch events to other activity pub compliant servers. This will most generally be the following:
@@ -56,3 +55,4 @@ The .well-known folder is the common standard for hosting two primary endpoints 
 https://github.com/landrok/activitypub
 https://www.w3.org/TR/activitypub/
 https://github.com/Automattic/wordpress-activitypub
+https://seb.jambor.dev/posts/understanding-activitypub/
