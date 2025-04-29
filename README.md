@@ -16,7 +16,7 @@ Available actor types: https://w3c.github.io/activitystreams/vocabulary/#actor-t
 
 ## Activity Stream
 
-A detail list of links to a users interaction options. Generally, this is retrieved by requesting the profile page with the `Accept: application/activity+json` header
+A detailed list of links to a users interaction options. Generally, this is retrieved by requesting the profile page with the `Accept: application/activity+json` header
 
 ### Outbox
 The outpost is a paginated collection of federated posts. MODX Resources can be made into a post by a user in the Activity Pub tab of the resource.
@@ -37,7 +37,7 @@ Used for handling incoming interactions with Actor, e.g. post comments, follow
 https://seb.jambor.dev/posts/understanding-activitypub/
 
 ### Dispatch
-This isn't an endpoint but the hidden glue that makes it all work. The server will dispatch events to servers. This will most generally be the following:
+This isn't an endpoint but the hidden glue that makes it all work. The server will dispatch events to other activity pub compliant servers. This will most generally be the following:
 - Send new post to followers
 - Send ACCEPT response to inbox follow requests
 
