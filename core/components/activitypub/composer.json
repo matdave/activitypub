@@ -1,0 +1,19 @@
+{
+    "autoload": {
+        "psr-4": {
+            "MatDave\\ActivityPub\\": "src/"
+        }
+    },
+    "require": {
+        "landrok/activitypub": "^0.7.2",
+        "matdave/modxpackage": "^1.0"
+    },
+    "require-dev": {
+        "modx/revolution": "^2.8"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    }
+}
