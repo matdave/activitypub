@@ -56,3 +56,6 @@ https://github.com/landrok/activitypub
 https://www.w3.org/TR/activitypub/
 https://github.com/Automattic/wordpress-activitypub
 https://seb.jambor.dev/posts/understanding-activitypub/
+
+# Requirements
+PHP >= 8.1

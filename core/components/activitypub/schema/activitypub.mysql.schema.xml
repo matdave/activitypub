@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="ActivityPub\Model\" baseClass="xPDO\Om\xPDOSimpleObject" platform="mysql" defaultEngine="InnoDB" version="3.0">
+    <object class="User" extends="MODX\Revolution\modUser">
+        <composite alias="Actor" class="APUser" local="id" foreign="user" cardinality="one" owner="local" />
+    </object>
+    <object class="Actor" table="ap_actor">
+        <field key="type" dbtype="varchar" precision="12" phptype="string" null="false" />
+        <field key="user" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+        <field key="manuallyApprovesFollowers" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="username" dbtype="varchar" precision="100" phptype="string" null="false" default="" index="unique" />
+        <field key="fullname" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
+        <field key="profile" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="icon" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+
+        <index alias="username" name="username" primary="false" unique="true" type="BTREE">
+            <column key="username" length="" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="User" class="APUser" local="user" foreign="id" cardinality="one" owner="foreign" />
+        <composite alias="Activities" class="Activity" local="id" foreign="actor" cardinality="many" owner="local" />
+        <composite alias="Followers" class="Follower" local="id" foreign="actor" cardinality="many" owner="local" />
+    </object>
+    <object class="Activity" table="ap_activity">
+        <field key="type" dbtype="varchar" precision="15" phptype="string" null="false" />
+        <field key="resource" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+        <field key="actor" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+        <field key="sensitive" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="public" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
+
+        <aggregate alias="Resource" class="MODX\Revolution\modResource" local="resource" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Actor" class="Actor" local="actor" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+    <object class="Follower" table="ap_follower">
+        <field key="actor" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+        <field key="user" dbtype="text" attributes="unsigned" phptype="string" null="false" default="" />
+
+        <aggregate alias="Actor" class="Actor" local="actor" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+</model>
