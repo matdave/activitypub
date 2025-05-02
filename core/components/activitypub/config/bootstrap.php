@@ -8,8 +8,7 @@ $dotenv->safeLoad();
 define('APP_ENV', $_ENV['APP_ENV'] ?? $_SERVER['APP_ENV'] ?? 'DEVELOPMENT');
 $settings = (require __DIR__ . '/settings.php')(APP_ENV);
 
-
-require_once(dir(__FILE__, 4) . 'config.core.php');
+require_once(dirname(__FILE__, 5) . '/config.core.php');
 
 define('MODX_API_MODE', true);
 if (!defined('MODX_CORE_PATH')) {

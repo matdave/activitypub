@@ -38,7 +38,7 @@ return static function (ContainerBuilder $containerBuilder, array $settings) {
             return $logger;
         },
 
-        modX::class => function () {
+        modX::class => function (ContainerInterface $c) {
             $modx = new modX();
             $modx->initialize('web');
             return $modx;

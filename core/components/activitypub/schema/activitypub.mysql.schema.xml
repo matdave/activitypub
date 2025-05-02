@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<model package="ActivityPub\Model\" baseClass="xPDO\Om\xPDOSimpleObject" platform="mysql" defaultEngine="InnoDB" version="3.0">
+<model package="MatDave\ActivityPub\Model\" baseClass="xPDO\Om\xPDOSimpleObject" platform="mysql" defaultEngine="InnoDB" version="3.0">
     <object class="User" extends="MODX\Revolution\modUser">
         <composite alias="Actor" class="APUser" local="id" foreign="user" cardinality="one" owner="local" />
     </object>
@@ -11,7 +11,16 @@
         <field key="fullname" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
         <field key="profile" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="icon" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="createdon" dbtype="int" precision="20" phptype="timestamp" null="false" default="0" />
+        <field key="privatekey" dbtype="text" phptype="string" null="false" default="" />
+        <field key="publickey" dbtype="text" phptype="string" null="false" default="" />
 
+        <index alias="type" name="type" primary="false" unique="false" type="BTREE">
+            <column key="type" length="" collation="A" null="true" />
+        </index>
+        <index alias="user" name="user" primary="false" unique="true" type="BTREE">
+            <column key="user" length="" collation="A" null="false" />
+        </index>
         <index alias="username" name="username" primary="false" unique="true" type="BTREE">
             <column key="username" length="" collation="A" null="false" />
         </index>
@@ -26,13 +35,37 @@
         <field key="actor" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
         <field key="sensitive" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
         <field key="public" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="summary" dbtype="text" phptype="string" null="false" default="" index="fulltext" indexgrp="content_ft_idx"  />
+        <field key="content" dbtype="mediumtext" phptype="string" index="fulltext" indexgrp="content_ft_idx" />
+        <field key="createdon" dbtype="int" precision="20" phptype="timestamp" null="false" default="0" />
+
+        <index alias="type" name="type" primary="false" unique="false" type="BTREE">
+            <column key="type" length="" collation="A" null="true" />
+        </index>
+        <index alias="resource" name="resource" primary="false" unique="false" type="BTREE">
+            <column key="resource" length="" collation="A" null="true" />
+        </index>
+        <index alias="actor" name="actor" primary="false" unique="false" type="BTREE">
+            <column key="actor" length="" collation="A" null="true" />
+        </index>
+        <index alias="public" name="public" primary="false" unique="false" type="BTREE">
+            <column key="public" length="" collation="A" null="true" />
+        </index>
+        <index alias="content_ft_idx" name="content_ft_idx" primary="false" unique="false" type="FULLTEXT">
+            <column key="summary" length="" collation="A" null="true" />
+            <column key="content" length="" collation="A" null="true" />
+        </index>
 
         <aggregate alias="Resource" class="MODX\Revolution\modResource" local="resource" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="Actor" class="Actor" local="actor" foreign="id" cardinality="one" owner="foreign" />
     </object>
     <object class="Follower" table="ap_follower">
         <field key="actor" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
-        <field key="user" dbtype="text" attributes="unsigned" phptype="string" null="false" default="" />
+        <field key="user" dbtype="text" phptype="string" null="false" default=""  />
+
+        <index alias="actor" name="actor" primary="false" unique="false" type="BTREE">
+            <column key="actor" length="" collation="A" null="true" />
+        </index>
 
         <aggregate alias="Actor" class="Actor" local="actor" foreign="id" cardinality="one" owner="foreign" />
     </object>

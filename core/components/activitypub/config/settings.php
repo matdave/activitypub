@@ -11,7 +11,7 @@ return static function (string $appEnv) {
         'display_error_details' => false,
         'log_errors' => true,
         'base_path_app' => '',
-        'base_path_manage' => '',
+        'base_path_manage' => '/activitypub',
         'logger' => [
             'name' => 'api',
             'path' => dirname(dirname(__FILE__)) . '/var/log/app.log',

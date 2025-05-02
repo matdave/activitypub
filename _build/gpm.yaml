@@ -1,14 +1,25 @@
 name: ActivityPub
-version: 1.0.0
+version: 0.0.1
 lowCaseName: activitypub
 namespace: MatDave\ActivityPub
 description: 'Activity Pub for MODX'
 author: matdave
 menus:
+  - text: activitypub
+    description: activitypub.desc
+    action: home
 plugins:
 systemSettings:
+    - key: nodeName
+      type: text
+    - key: nodeDescription
+      type: text
+
 database:
     tables:
+        - MatDave\ActivityPub\Model\Actor
+        - MatDave\ActivityPub\Model\Activity
+        - MatDave\ActivityPub\Model\Follower
 build:
     scriptsAfter:
         - lit.gpm.php

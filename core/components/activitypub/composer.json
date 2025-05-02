@@ -11,6 +11,7 @@
         "middlewares/trailing-slash": "^2.1",
         "monolog/monolog": "^2.10",
         "php-di/php-di": "^7.0",
+        "phpseclib/phpseclib": "^3.0",
         "slim/psr7": "^1.6",
         "slim/slim": "^4.14",
         "vlucas/phpdotenv": "^5.6"
