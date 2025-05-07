@@ -24,7 +24,8 @@ class Actor extends \MatDave\ActivityPub\Model\Actor
             'profile' => '',
             'icon' => '',
             'createdon' => 0,
-            'privatekey' => NULL,
+            'privatekey' => '',
+            'publickey' => '',
         ),
         'fieldMeta' => 
         array (
@@ -98,6 +99,15 @@ class Actor extends \MatDave\ActivityPub\Model\Actor
             array (
                 'dbtype' => 'text',
                 'phptype' => 'string',
+                'null' => false,
+                'default' => '',
+            ),
+            'publickey' => 
+            array (
+                'dbtype' => 'text',
+                'phptype' => 'string',
+                'null' => false,
+                'default' => '',
             ),
         ),
         'indexes' => 

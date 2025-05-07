@@ -16,17 +16,23 @@ class Activity extends \MatDave\ActivityPub\Model\Activity
         ),
         'fields' => 
         array (
+            'action' => NULL,
             'type' => NULL,
             'resource' => 0,
             'actor' => 0,
             'sensitive' => 0,
             'public' => 0,
-            'summary' => '',
-            'content' => NULL,
             'createdon' => 0,
         ),
         'fieldMeta' => 
         array (
+            'action' => 
+            array (
+                'dbtype' => 'varchar',
+                'precision' => '15',
+                'phptype' => 'string',
+                'null' => false,
+            ),
             'type' => 
             array (
                 'dbtype' => 'varchar',
@@ -69,22 +75,6 @@ class Activity extends \MatDave\ActivityPub\Model\Activity
                 'phptype' => 'boolean',
                 'null' => false,
                 'default' => 0,
-            ),
-            'summary' => 
-            array (
-                'dbtype' => 'text',
-                'phptype' => 'string',
-                'null' => false,
-                'default' => '',
-                'index' => 'fulltext',
-                'indexgrp' => 'content_ft_idx',
-            ),
-            'content' => 
-            array (
-                'dbtype' => 'mediumtext',
-                'phptype' => 'string',
-                'index' => 'fulltext',
-                'indexgrp' => 'content_ft_idx',
             ),
             'createdon' => 
             array (
@@ -154,28 +144,6 @@ class Activity extends \MatDave\ActivityPub\Model\Activity
                 'columns' => 
                 array (
                     'public' => 
-                    array (
-                        'length' => '',
-                        'collation' => 'A',
-                        'null' => true,
-                    ),
-                ),
-            ),
-            'content_ft_idx' => 
-            array (
-                'alias' => 'content_ft_idx',
-                'primary' => false,
-                'unique' => false,
-                'type' => 'FULLTEXT',
-                'columns' => 
-                array (
-                    'summary' => 
-                    array (
-                        'length' => '',
-                        'collation' => 'A',
-                        'null' => true,
-                    ),
-                    'content' => 
                     array (
                         'length' => '',
                         'collation' => 'A',

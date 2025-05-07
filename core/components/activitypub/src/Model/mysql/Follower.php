@@ -18,6 +18,8 @@ class Follower extends \MatDave\ActivityPub\Model\Follower
         array (
             'actor' => 0,
             'user' => '',
+            'approved' => 0,
+            'createdon' => 0,
         ),
         'fieldMeta' => 
         array (
@@ -37,6 +39,23 @@ class Follower extends \MatDave\ActivityPub\Model\Follower
                 'null' => false,
                 'default' => '',
             ),
+            'approved' => 
+            array (
+                'dbtype' => 'tinyint',
+                'attributes' => 'unsigned',
+                'precision' => '1',
+                'phptype' => 'boolean',
+                'null' => false,
+                'default' => 0,
+            ),
+            'createdon' => 
+            array (
+                'dbtype' => 'int',
+                'precision' => '20',
+                'phptype' => 'timestamp',
+                'null' => false,
+                'default' => 0,
+            ),
         ),
         'indexes' => 
         array (
@@ -49,6 +68,22 @@ class Follower extends \MatDave\ActivityPub\Model\Follower
                 'columns' => 
                 array (
                     'actor' => 
+                    array (
+                        'length' => '',
+                        'collation' => 'A',
+                        'null' => true,
+                    ),
+                ),
+            ),
+            'approved' => 
+            array (
+                'alias' => 'approved',
+                'primary' => false,
+                'unique' => false,
+                'type' => 'BTREE',
+                'columns' => 
+                array (
+                    'approved' => 
                     array (
                         'length' => '',
                         'collation' => 'A',

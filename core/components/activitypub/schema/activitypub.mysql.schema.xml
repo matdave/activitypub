@@ -30,15 +30,17 @@
         <composite alias="Followers" class="Follower" local="id" foreign="actor" cardinality="many" owner="local" />
     </object>
     <object class="Activity" table="ap_activity">
+        <field key="action" dbtype="varchar" precision="15" phptype="string" null="false" />
         <field key="type" dbtype="varchar" precision="15" phptype="string" null="false" />
         <field key="resource" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
         <field key="actor" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
         <field key="sensitive" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
         <field key="public" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
-        <field key="summary" dbtype="text" phptype="string" null="false" default="" index="fulltext" indexgrp="content_ft_idx"  />
-        <field key="content" dbtype="mediumtext" phptype="string" index="fulltext" indexgrp="content_ft_idx" />
         <field key="createdon" dbtype="int" precision="20" phptype="timestamp" null="false" default="0" />
 
+        <index alias="action" name="type" primary="false" unique="false" type="BTREE">
+            <column key="action" length="" collation="A" null="true" />
+        </index>
         <index alias="type" name="type" primary="false" unique="false" type="BTREE">
             <column key="type" length="" collation="A" null="true" />
         </index>
@@ -51,10 +53,6 @@
         <index alias="public" name="public" primary="false" unique="false" type="BTREE">
             <column key="public" length="" collation="A" null="true" />
         </index>
-        <index alias="content_ft_idx" name="content_ft_idx" primary="false" unique="false" type="FULLTEXT">
-            <column key="summary" length="" collation="A" null="true" />
-            <column key="content" length="" collation="A" null="true" />
-        </index>
 
         <aggregate alias="Resource" class="MODX\Revolution\modResource" local="resource" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="Actor" class="Actor" local="actor" foreign="id" cardinality="one" owner="foreign" />
@@ -62,9 +60,15 @@
     <object class="Follower" table="ap_follower">
         <field key="actor" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
         <field key="user" dbtype="text" phptype="string" null="false" default=""  />
+        <field key="approved" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="createdon" dbtype="int" precision="20" phptype="timestamp" null="false" default="0" />
 
         <index alias="actor" name="actor" primary="false" unique="false" type="BTREE">
             <column key="actor" length="" collation="A" null="true" />
+        </index>
+
+        <index alias="approved" name="approved" primary="false" unique="false" type="BTREE">
+            <column key="approved" length="" collation="A" null="true" />
         </index>
 
         <aggregate alias="Actor" class="Actor" local="actor" foreign="id" cardinality="one" owner="foreign" />

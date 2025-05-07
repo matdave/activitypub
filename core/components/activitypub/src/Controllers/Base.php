@@ -1,5 +1,10 @@
 <?php
-abstract class ActivityPubBaseManagerController extends modExtraManagerController {
+
+namespace MatDave\ActivityPub\Controllers;
+
+use \MODX\Revolution\modExtraManagerController;
+
+abstract class Base extends modExtraManagerController {
     /** @var \MatDave\ActivityPub\Service $activitypub */
     public $activitypub;
     public int $lit = 0;

@@ -3,6 +3,12 @@
 declare(strict_types=1);
 
 use MatDave\ActivityPub\Api\Controllers\ActivityStream\Actor;
+use MatDave\ActivityPub\Api\Controllers\ActivityStream\Followers;
+use MatDave\ActivityPub\Api\Controllers\ActivityStream\Following;
+use MatDave\ActivityPub\Api\Controllers\ActivityStream\Inbox;
+use MatDave\ActivityPub\Api\Controllers\ActivityStream\Outbox;
+use MatDave\ActivityPub\Api\Controllers\ActivityStream\Posts\Activity;
+use MatDave\ActivityPub\Api\Controllers\ActivityStream\Posts\Post;
 use MatDave\ActivityPub\Api\Controllers\NodeInfo\Links as NodeLinks;
 use MatDave\ActivityPub\Api\Controllers\NodeInfo\NodeInfo;
 use MatDave\ActivityPub\Api\Controllers\WebFinger\Resource as WebFinger;
@@ -36,10 +42,17 @@ return new class {
         $app->get('/webfinger[/'.self::PARAMS.']',
             WebFinger::class
         );
+        $app->post('/inbox', Inbox::class);
 
         $app->group(
             '/users',
             function (RouteCollectorProxy $group) use ($restful): void {
+                $group->post('/' . self::ALIAS . '/inbox', Inbox::class);
+                $group->get('/' . self::ALIAS. '/following[/' . self::PARAMS.']', Following::class);
+                $group->get('/' . self::ALIAS . '/followers[/' . self::PARAMS.']', Followers::class);
+                $group->get('/' . self::ALIAS . '/posts/' . self::ID.'/activity', Activity::class);
+                $group->get('/' . self::ALIAS . '/posts[/' . self::ID.']', Post::class);
+                $group->get('/' . self::ALIAS . '/outbox[/' . self::PARAMS.']', Outbox::class);
                 $group->get('/' . self::ALIAS, Actor::class);
             }
         );
