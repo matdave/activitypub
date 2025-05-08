@@ -43,7 +43,9 @@ class Post extends Restful
         $headers = $request->getHeaders();
         if (
             !empty($headers['Accept']) &&
-            in_array('application/activity+json', $headers['Accept'])
+            ( in_array('application/activity+json', $headers['Accept']) ||
+                in_array('application/ld+json', $headers['Accept'])  ||
+                in_array('application/json', $headers['Accept']) )
         ) {
             $response = [
                 "@context" => [

@@ -46,12 +46,16 @@ return new class {
         $app->get('/authorize_interactions[/'.self::PARAMS.']',
             Subscribe::class
         );
-        $app->post('/inbox', Inbox::class);
+        $app->any('/inbox', Inbox::class)->add(
+            $restful->withAllowedMethods(['GET', 'POST'])
+        );
 
         $app->group(
             '/users',
             function (RouteCollectorProxy $group) use ($restful): void {
-                $group->post('/' . self::ALIAS . '/inbox', Inbox::class);
+                $group->any('/' . self::ALIAS . '/inbox', Inbox::class)->add(
+                    $restful->withAllowedMethods(['GET', 'POST'])
+                );
                 $group->get('/' . self::ALIAS. '/following[/' . self::PARAMS.']', Following::class);
                 $group->get('/' . self::ALIAS . '/followers[/' . self::PARAMS.']', Followers::class);
                 $group->get('/' . self::ALIAS . '/posts/' . self::ID.'/activity', Activity::class);

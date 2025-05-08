@@ -85,6 +85,50 @@ class Inbox extends Restful
         }
         return $this->respondWithItem($request, ['success' => $verified]);
     }
+    
+    public function get(ServerRequestInterface $request): ResponseInterface
+    {
+        $defaultParams = [
+            'page' => 0,
+        ];
+        $paramsCast = [
+            'page' => 'int'
+        ];
+        $params = $this->getParams($request, $defaultParams, $paramsCast, []);
+        $basePath = rtrim($this->modx->config['site_url'], '/');
+        $apiPath = $basePath . $this->config->get('base_path_manage', '/activitypub');
+
+        if ($request->getAttribute('alias')) {
+            $condition = ['username' => $request->getAttribute('alias')];
+            $actor = $this->modx->getObject(\MatDave\ActivityPub\Model\Actor::class, $condition);
+            if (!$actor) {
+                throw RestfulException::notFound();
+            }
+            $owner = $apiPath . '/users/' . $actor->get('username');
+        } else {
+            $owner = $apiPath;
+        }
+        $total = 0;
+        if ($params['page'] > 0) {
+            $response = [
+                "@context" => "https://www.w3.org/ns/activitystreams",
+                "id" => $owner . "/inbox?page=1",
+                "type" => "OrderedCollectionPage",
+                "totalItems" => $total,
+                "partOf" => $owner . "/inbox",
+                "orderedItems" => []
+            ];
+        } else {
+            $response = [
+                "@context" => "https://www.w3.org/ns/activitystreams",
+                "id" => $owner . "/inbox",
+                "type" => "OrderedCollection",
+                "totalItems" => $total,
+                "first" => $owner . "/inbox?page=1"
+            ];
+        }
+        return $this->respondWithItem($request, $response);
+    }
 
     private function handleFollow(string $actor, string $object)
     {
