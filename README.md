@@ -55,6 +55,7 @@ The .well-known folder is the common standard for hosting two primary endpoints 
 - https://github.com/landrok/activitypub
 - https://www.w3.org/TR/activitypub/
 - https://github.com/Automattic/wordpress-activitypub
+- https://git.drupalcode.org/project/activitypub
 - https://seb.jambor.dev/posts/understanding-activitypub/
 - https://verify.funfedi.dev
 - https://github.com/smolblog/smolblog/tree/main/packages/framework/activitypub/src/Signatures
@@ -62,3 +63,7 @@ The .well-known folder is the common standard for hosting two primary endpoints 
 # Requirements
 
 PHP >= 8.1
+
+# Attribution
+
+Signature verification is based on the hard work of the [smolblog](https://github.com/smolblog/smolblog/) project.

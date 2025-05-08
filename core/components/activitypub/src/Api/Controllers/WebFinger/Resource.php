@@ -63,6 +63,10 @@ class Resource extends Restful
                     "type" => "application/activity+json",
                     "href" => $apiPath . "/users/" . $actorObj->get('username')
                 ],
+                [
+                    "rel" => "http://ostatus.org/schema/1.0/subscribe",
+                    "template" => $apiPath . "/authorize_interactions?uri={uri}"
+                ]
             ]
         ];
 

@@ -6,7 +6,6 @@
     },
     "require": {
         "ext-json": "*",
-        "landrok/activitypub": "^0.7.2",
         "matdave/modxpackage": "^1.0",
         "middlewares/trailing-slash": "^2.1",
         "monolog/monolog": "^2.10",

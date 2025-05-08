@@ -33,7 +33,7 @@ class NodeInfo extends Restful
         }
         $localPosts = $this->modx->getCount(
             Activity::class,
-            ['type:IN' => ['Create']]
+            ['action:IN' => ['Create']]
         );
         // active month
         $c = $this->modx->newQuery(Activity::class);

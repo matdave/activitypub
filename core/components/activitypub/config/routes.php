@@ -12,6 +12,7 @@ use MatDave\ActivityPub\Api\Controllers\ActivityStream\Posts\Post;
 use MatDave\ActivityPub\Api\Controllers\NodeInfo\Links as NodeLinks;
 use MatDave\ActivityPub\Api\Controllers\NodeInfo\NodeInfo;
 use MatDave\ActivityPub\Api\Controllers\WebFinger\Resource as WebFinger;
+use MatDave\ActivityPub\Api\Controllers\WebFinger\Subscribe;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 use MatDave\ActivityPub\Api\Middleware\Restful;
@@ -41,6 +42,9 @@ return new class {
 
         $app->get('/webfinger[/'.self::PARAMS.']',
             WebFinger::class
+        );
+        $app->get('/authorize_interactions[/'.self::PARAMS.']',
+            Subscribe::class
         );
         $app->post('/inbox', Inbox::class);
 

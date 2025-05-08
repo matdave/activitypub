@@ -7,12 +7,13 @@ use JsonException;
 use MatDave\ActivityPub\Api\Configuration;
 use MatDave\ActivityPub\Api\Controllers\Restful;
 use MatDave\ActivityPub\Api\Exceptions\RestfulException;
-use MatDave\ActivityPub\Utils\Signature;
+use MatDave\ActivityPub\Utils\Signatures\MessageVerifier;
 use MODX\Revolution\modX;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use function Aws\default_user_agent;
 
 class Inbox extends Restful
 {
@@ -55,13 +56,43 @@ class Inbox extends Restful
                 throw RestfulException::badRequest(['error' => 'Object not found']);
             }
         }
-        $response = '';
+        $verified = false;
         if ($type && $actor) {
-            $httpSignature = new Signature($this->client, $this->requestFactory);
-            $response = $httpSignature->verify($request);
-            $this->modx->log(1, $request->getHeaderLine('Signature'));
-            $this->modx->log(1, $httpSignature->verify($request));
+            $verifier = new MessageVerifier();
+            $keyId = $verifier->getKeyId($request);
+            if (empty($keyId)) {
+                throw RestfulException::badRequest(['error' => 'Key not found']);
+            }
+            $publicKeyPem = $verifier->getPublicKeyPem($this->requestFactory, $this->client, $keyId);
+            if (empty($publicKeyPem)) {
+                throw RestfulException::badRequest(['error' => 'Public key not found']);
+            }
+            $verified = $verifier->verify($request, $publicKeyPem);
         }
-        return $this->respondWithItem($request, ['resp' => $response]);
+
+        if ($verified) {
+            switch ($type) {
+                case 'Follow':
+                    $this->handleFollow($actor, $object);
+                    break;
+                case 'Undo':
+                    $this->handleUndo($actor, $object);
+                    break;
+                default:
+                    $this->modx->log(1, "unhandled type: " . $type . " - " . $object);
+                    $verified = false;
+            }
+        }
+        return $this->respondWithItem($request, ['success' => $verified]);
+    }
+
+    private function handleFollow(string $actor, string $object)
+    {
+        $nodeActor = $this->modx->getObject(Actor::class, []);
+    }
+
+    private function handleUndo(string $actor, string $object)
+    {
+
     }
 }
