@@ -2,11 +2,12 @@
 
 namespace MatDave\ActivityPub\Api\Controllers\ActivityStream\Posts;
 
-use MatDave\ActivityPub\Api\Controllers\Restful;
-use MatDave\ActivityPub\Api\Exceptions\RestfulException;
+use MatDave\ActivityPub\{Api\Controllers\Restful,
+    Api\Exceptions\RestfulException,
+    Model\Activity as ActivityAlias,
+    Model\Actor};
 use MODX\Revolution\modResource;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 
 class Activity extends Restful
 {
@@ -21,13 +22,13 @@ class Activity extends Restful
 
         $condition = ['username' => $request->getAttribute('alias')];
 
-        $actor = $this->modx->getObject(\MatDave\ActivityPub\Model\Actor::class, $condition);
+        $actor = $this->modx->getObject(Actor::class, $condition);
         if (!$actor) {
             throw RestfulException::notFound();
         }
         $owner = $apiPath . '/users/' . $actor->get('username');
         $id = $request->getAttribute('id');
-        $activity = $this->modx->getObject(\MatDave\ActivityPub\Model\Activity::class, ['id' => $id, 'actor' => $actor->id]);
+        $activity = $this->modx->getObject(ActivityAlias::class, ['id' => $id, 'actor' => $actor->id]);
 
         if (empty($activity)) {
             throw RestfulException::notFound();
@@ -69,6 +70,26 @@ class Activity extends Restful
                     'content' => $activity->parseContent(),
                     'published' =>  $activity->formatTime($noteDate),
                     'sensitive' => $activity->get('sensitive'),
+                    'replies' => [
+                        'id' => $owner . '/posts/' . $activity->get('id') . '/replies',
+                        'type' => 'Collection',
+                        'first' => [
+                            "type" => "CollectionPage",
+                            "next" => $owner . '/posts/' . $activity->get('id') . '/replies?page=true',
+                            "partOf" => $owner . '/posts/' . $activity->get('id') . '/replies',
+                            "items" => $activity->getReplies()
+                        ]
+                    ],
+                    'likes' => [
+                        'id' => $owner . '/posts/' . $activity->get('id') . '/likes',
+                        'type' => 'Collection',
+                        'totalItems' => $activity->get('likes'),
+                    ],
+                    'shares' => [
+                        'id' => $owner . '/posts/' . $activity->get('id') . '/shares',
+                        'type' => 'Collection',
+                        'totalItems' => $activity->get('shares'),
+                    ]
                 ];
                 if ($lang) {
                     $object['contentMap'] = [

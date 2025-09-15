@@ -3,9 +3,7 @@
 namespace MatDave\ActivityPub\Api\Controllers\WebFinger;
 
 use MatDave\ActivityPub\Api\Controllers\Restful;
-use MatDave\ActivityPub\Api\Exceptions\RestfulException;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 
 class Subscribe extends Restful
 {

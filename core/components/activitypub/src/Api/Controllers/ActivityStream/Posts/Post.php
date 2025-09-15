@@ -2,10 +2,12 @@
 
 namespace MatDave\ActivityPub\Api\Controllers\ActivityStream\Posts;
 
-use MatDave\ActivityPub\Api\Controllers\Restful;
-use MatDave\ActivityPub\Api\Exceptions\RestfulException;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use MatDave\ActivityPub\{Api\Controllers\Restful,
+    Api\Exceptions\RestfulException,
+    Model\Activity as ActivityAlias,
+    Model\Actor};
+use MODX\Revolution\modResource;
+use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 
 class Post extends Restful
 {
@@ -18,7 +20,7 @@ class Post extends Restful
         $apiPath = $basePath . $this->config->get('base_path_manage', '/activitypub');
         $condition = ['username' => $request->getAttribute('alias')];
 
-        $actor = $this->modx->getObject(\MatDave\ActivityPub\Model\Actor::class, $condition);
+        $actor = $this->modx->getObject(Actor::class, $condition);
         if (!$actor) {
             throw RestfulException::notFound();
         }
@@ -26,7 +28,7 @@ class Post extends Restful
         $response = [];
         $id = $request->getAttribute('id');
         $activity = $this->modx->getObject(
-            \MatDave\ActivityPub\Model\Activity::class,
+            ActivityAlias::class,
             ['id' => $id, 'actor' => $actor->id]
         );
 
@@ -34,7 +36,7 @@ class Post extends Restful
             throw RestfulException::notFound();
         }
         $resource = $this->modx->getObject(
-            \MODX\Revolution\modResource::class,
+            modResource::class,
             ['id' => $activity->get('resource'), 'published' => true, 'deleted'=> false]
         );
         if (empty($resource)) {
@@ -67,6 +69,26 @@ class Post extends Restful
                     'content' => $activity->parseContent(),
                     'published' =>  $activity->formatTime($noteDate),
                     'sensitive' => $activity->get('sensitive'),
+                    'replies' => [
+                        'id' => $owner . '/posts/' . $activity->get('id') . '/replies',
+                        'type' => 'Collection',
+                        'first' => [
+                            "type" => "CollectionPage",
+                            "next" => $owner . '/posts/' . $activity->get('id') . '/replies?page=true',
+                            "partOf" => $owner . '/posts/' . $activity->get('id') . '/replies',
+                            "items" => $activity->getReplies()
+                        ]
+                    ],
+                    'likes' => [
+                        'id' => $owner . '/posts/' . $activity->get('id') . '/likes',
+                        'type' => 'Collection',
+                        'totalItems' => $activity->get('likes'),
+                    ],
+                    'shares' => [
+                        'id' => $owner . '/posts/' . $activity->get('id') . '/shares',
+                        'type' => 'Collection',
+                        'totalItems' => $activity->get('shares'),
+                    ]
                 ];
                 if ($lang) {
                     $object['contentMap'] = [

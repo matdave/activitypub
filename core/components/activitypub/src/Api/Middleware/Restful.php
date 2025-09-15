@@ -2,11 +2,9 @@
 
 namespace MatDave\ActivityPub\Api\Middleware;
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Psr7\Response;
 use MatDave\ActivityPub\Api\Exceptions\RestfulException;
+use Psr\{Http\Message\ResponseInterface, Http\Message\ServerRequestInterface, Http\Server\RequestHandlerInterface};
+use Slim\Psr7\Response;
 
 class Restful
 {

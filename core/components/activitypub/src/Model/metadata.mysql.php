@@ -13,7 +13,8 @@ $xpdo_meta_map = array (
         array (
             0 => 'MatDave\\ActivityPub\\Model\\Actor',
             1 => 'MatDave\\ActivityPub\\Model\\Activity',
-            2 => 'MatDave\\ActivityPub\\Model\\Follower',
+            2 => 'MatDave\\ActivityPub\\Model\\Activity\\Reply',
+            3 => 'MatDave\\ActivityPub\\Model\\Follower',
         ),
     ),
 );

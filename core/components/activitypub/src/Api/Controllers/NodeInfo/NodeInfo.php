@@ -2,12 +2,9 @@
 
 namespace MatDave\ActivityPub\Api\Controllers\NodeInfo;
 
-use MatDave\ActivityPub\Api\Controllers\Restful;
-use MatDave\ActivityPub\Model\Activity;
-use MatDave\ActivityPub\Model\Actor;
+use MatDave\ActivityPub\{Api\Controllers\Restful, Model\Activity, Model\Actor};
 use MODX\Revolution\modResource;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 
 class NodeInfo extends Restful
 {

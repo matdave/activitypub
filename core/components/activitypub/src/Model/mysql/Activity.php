@@ -23,6 +23,8 @@ class Activity extends \MatDave\ActivityPub\Model\Activity
             'sensitive' => 0,
             'public' => 0,
             'createdon' => 0,
+            'likes' => 0,
+            'shares' => 0,
         ),
         'fieldMeta' => 
         array (
@@ -81,6 +83,24 @@ class Activity extends \MatDave\ActivityPub\Model\Activity
                 'dbtype' => 'int',
                 'precision' => '20',
                 'phptype' => 'timestamp',
+                'null' => false,
+                'default' => 0,
+            ),
+            'likes' => 
+            array (
+                'dbtype' => 'int',
+                'attributes' => 'unsigned',
+                'precision' => '10',
+                'phptype' => 'integer',
+                'null' => false,
+                'default' => 0,
+            ),
+            'shares' => 
+            array (
+                'dbtype' => 'int',
+                'attributes' => 'unsigned',
+                'precision' => '10',
+                'phptype' => 'integer',
                 'null' => false,
                 'default' => 0,
             ),
@@ -150,6 +170,17 @@ class Activity extends \MatDave\ActivityPub\Model\Activity
                         'null' => true,
                     ),
                 ),
+            ),
+        ),
+        'composites' => 
+        array (
+            'Replies' => 
+            array (
+                'class' => 'Activity\\Reply',
+                'local' => 'id',
+                'foreign' => 'activity',
+                'cardinality' => 'many',
+                'owner' => 'local',
             ),
         ),
         'aggregates' => 

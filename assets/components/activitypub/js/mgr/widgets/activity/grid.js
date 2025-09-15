@@ -12,19 +12,19 @@ activitypub.grid.Activity = function (config) {
             'actor',
             'resource',
             'type',
-            'summary',
-            'content',
             'public',
             'sensitive',
             'createdon',
             'actor_username',
-            'resource_pagetitle'
+            'resource_pagetitle',
+            'resource_content',
+            'resource_introtext',
         ],
         autosave: true,
         autoHeight: true,
         paging: true,
         remoteSort: true,
-        autoExpandColumn: 'summary',
+        autoExpandColumn: 'resource_content',
         columns: [
             {
                 header: _('id'),
@@ -36,9 +36,6 @@ activitypub.grid.Activity = function (config) {
                 header: _('activitypub.field.type'),
                 dataIndex: 'type',
                 sortable: true,
-                editor: {
-                    xtype: 'activitypub-combo-activity_type'
-                }
             },
             {
                 header: _('activitypub.field.createdon'),
@@ -46,20 +43,31 @@ activitypub.grid.Activity = function (config) {
                 sortable: true
             },
             {
-                header: _('activitypub.field.summary'),
-                dataIndex: 'summary',
-                sortable: true
+                header: _('activitypub.field.pagetitle'),
+                dataIndex: 'resource_pagetitle',
+                sortable: true,
+            },
+            {
+                header: _('activitypub.field.content'),
+                dataIndex: 'resource_content',
+                sortable: true,
+                renderer: function (value, metaData, record) {
+                    if (record.data.resource_introtext) {
+                        return record.data.resource_introtext;
+                    }
+                    const content = document.createElement('div');
+                    content.innerHTML = record.data.resource_content;
+                    const text = content.textContent || content.innerText || '';
+                    if (text > 100) {
+                        return text.substr(0, 100) + '...';
+                    }
+                    return text;
+                }
             },
             {
                 header: _('activitypub.field.actor'),
                 dataIndex: 'actor_username',
                 sortable: true
-            },
-            {
-                header: _('activitypub.field.pagetitle'),
-                dataIndex: 'resource_pagetitle',
-                sortable: true,
-                hidden: true
             },
         ]
     });

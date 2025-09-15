@@ -4,7 +4,6 @@ namespace MatDave\ActivityPub\Model;
 use DateTime;
 use DateTimeZone;
 use MODX\Revolution\modResource;
-use xPDO\xPDO;
 
 /**
  * Class Activity
@@ -43,5 +42,21 @@ class Activity extends \xPDO\Om\xPDOSimpleObject
         $dateTime->setTimestamp(strtotime($date));
         $dateTime->setTimezone($timeZone);
         return $dateTime->format($dateTime::ATOM);
+    }
+
+    public function getReplies($total = 10, $start = 0)
+    {
+        $c = $this->xpdo->newQuery(Activity\Reply::class);
+        $c->where([
+            'activity' => $this->id,
+        ]);
+        $c->sortby('createdon', 'DESC');
+        $c->limit($total, $start);
+        $collection = $this->xpdo->getCollection(Activity\Reply::class, $c);
+        $response = [];
+        foreach ($collection as $reply) {
+            $response[] = $reply->toArray();
+        }
+        return $response;
     }
 }

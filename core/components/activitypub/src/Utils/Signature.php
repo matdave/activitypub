@@ -3,10 +3,7 @@
 namespace MatDave\ActivityPub\Utils;
 
 use phpseclib3\Crypt\PublicKeyLoader;
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Slim\Psr7\Request;
+use Psr\Http\{Client\ClientInterface, Message\RequestFactoryInterface, Message\ServerRequestInterface};
 
 class Signature
 {

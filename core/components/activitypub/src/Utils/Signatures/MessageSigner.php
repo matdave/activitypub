@@ -2,7 +2,6 @@
 
 namespace MatDave\ActivityPub\Utils\Signatures;
 
-use phpseclib3\Crypt\PublicKeyLoader;
 use Psr\Http\Message\RequestInterface;
 
 /**

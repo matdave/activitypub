@@ -3,9 +3,7 @@
 namespace MatDave\ActivityPub\Utils\Signatures;
 
 use DateTimeImmutable;
-use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\{Client\ClientInterface, Message\RequestFactoryInterface, Message\RequestInterface};
 
 /**
  * Verify HTTP requests.

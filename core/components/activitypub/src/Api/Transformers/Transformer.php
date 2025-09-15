@@ -2,8 +2,6 @@
 
 namespace MatDave\ActivityPub\Api\Transformers;
 
-use MatDave\ActivityPub\Api\Configuration;
-
 abstract class Transformer
 {
     /** @var array */

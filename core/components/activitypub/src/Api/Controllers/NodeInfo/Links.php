@@ -3,8 +3,7 @@
 namespace MatDave\ActivityPub\Api\Controllers\NodeInfo;
 
 use MatDave\ActivityPub\Api\Controllers\Restful;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 
 class Links extends Restful
 {
@@ -18,7 +17,7 @@ class Links extends Restful
                 'href' => $apiPath . '/nodeinfo/2.0',
             ]
         ];
-        return $this->respondWithItem($request, $links);
+        return $this->respondWithItem($request, ['links' => $links]);
     }
 
 }

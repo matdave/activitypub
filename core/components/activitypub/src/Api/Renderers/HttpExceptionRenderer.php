@@ -2,8 +2,7 @@
 
 namespace MatDave\ActivityPub\Api\Renderers;
 
-use Slim\Error\AbstractErrorRenderer;
-use Slim\Interfaces\ErrorRendererInterface;
+use Slim\{Error\AbstractErrorRenderer, Interfaces\ErrorRendererInterface};
 use Throwable;
 
 class HttpExceptionRenderer extends AbstractErrorRenderer

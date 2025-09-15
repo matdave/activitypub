@@ -2,9 +2,7 @@
 namespace MatDave\ActivityPub\Model;
 
 use MODX\Revolution\modResource;
-use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\Crypt\RSA;
-use xPDO\xPDO;
 
 /**
  * Class Actor

@@ -1,8 +1,6 @@
 <?php
 namespace MatDave\ActivityPub\Model;
 
-use xPDO\xPDO;
-
 /**
  * Class User
  *

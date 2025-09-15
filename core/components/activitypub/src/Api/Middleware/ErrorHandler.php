@@ -2,14 +2,12 @@
 
 namespace MatDave\ActivityPub\Api\Middleware;
 
-use MatDave\ActivityPub\Api\Exceptions\RestfulException;
-use MatDave\ActivityPub\Api\Renderers\HttpExceptionRenderer;
-use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Log\LoggerInterface;
-use Slim\Handlers\ErrorHandler as SlimErrorHandler;
-use Slim\Interfaces\CallableResolverInterface;
+use MatDave\ActivityPub\Api\{Exceptions\RestfulException, Renderers\HttpExceptionRenderer};
+use Psr\{Http\Message\ResponseFactoryInterface,
+    Http\Message\ResponseInterface,
+    Http\Message\ServerRequestInterface,
+    Log\LoggerInterface};
+use Slim\{Handlers\ErrorHandler as SlimErrorHandler, Interfaces\CallableResolverInterface};
 use Throwable;
 
 class ErrorHandler extends SlimErrorHandler

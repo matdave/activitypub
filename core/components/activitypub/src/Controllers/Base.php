@@ -2,10 +2,11 @@
 
 namespace MatDave\ActivityPub\Controllers;
 
-use \MODX\Revolution\modExtraManagerController;
+use MatDave\ActivityPub\Service;
+use MODX\Revolution\modExtraManagerController;
 
 abstract class Base extends modExtraManagerController {
-    /** @var \MatDave\ActivityPub\Service $activitypub */
+    /** @var Service $activitypub */
     public $activitypub;
     public int $lit = 0;
 

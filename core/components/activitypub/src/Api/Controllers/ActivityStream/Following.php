@@ -2,11 +2,8 @@
 
 namespace MatDave\ActivityPub\Api\Controllers\ActivityStream;
 
-use MatDave\ActivityPub\Api\Controllers\Restful;
-use MatDave\ActivityPub\Api\Exceptions\RestfulException;
-use MatDave\ActivityPub\Model\Follower;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use MatDave\ActivityPub\{Api\Controllers\Restful, Api\Exceptions\RestfulException, Model\Actor as ActorAlias};
+use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
 
 class Following extends Restful
 {
@@ -24,7 +21,7 @@ class Following extends Restful
 
         $condition = ['username' => $request->getAttribute('alias')];
 
-        $actor = $this->modx->getObject(\MatDave\ActivityPub\Model\Actor::class, $condition);
+        $actor = $this->modx->getObject(ActorAlias::class, $condition);
         if (!$actor) {
             throw RestfulException::notFound();
         }

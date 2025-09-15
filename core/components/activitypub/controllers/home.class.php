@@ -2,4 +2,6 @@
 
 require_once dirname(dirname(__FILE__)) . '/vendor/autoload.php';
 
-return \MatDave\ActivityPub\Controllers\Home::class;
+class ActivityPubHomeManagerController extends \MatDave\ActivityPub\Controllers\Home
+{
+}

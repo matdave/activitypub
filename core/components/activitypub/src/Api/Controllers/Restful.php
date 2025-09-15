@@ -2,16 +2,14 @@
 
 namespace MatDave\ActivityPub\Api\Controllers;
 
+use MatDave\ActivityPub\{Api\Configuration,
+    Api\Exceptions\RestfulException,
+    Api\Transformers\Transformer,
+    Api\Transformers\xPDOObjectTransformer,
+    Api\TypeCast\Caster};
 use MODX\Revolution\modX;
-use Psr\Http\Server\RequestHandlerInterface;
+use Psr\{Http\Message\ResponseInterface, Http\Message\ServerRequestInterface, Http\Server\RequestHandlerInterface};
 use Slim\Psr7\Response;
-use MatDave\ActivityPub\Api\Configuration;
-use MatDave\ActivityPub\Api\Exceptions\RestfulException;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use MatDave\ActivityPub\Api\Transformers\Transformer;
-use MatDave\ActivityPub\Api\Transformers\xPDOObjectTransformer;
-use MatDave\ActivityPub\Api\TypeCast\Caster;
 
 abstract class Restful implements RequestHandlerInterface
 {
@@ -57,7 +55,7 @@ abstract class Restful implements RequestHandlerInterface
      * @param  array  $paramsCast
      *
      * @return array
-     * @throws \MatDave\ActivityPub\Api\Exceptions\RestfulException
+     * @throws RestfulException
      */
     protected function getParams(ServerRequestInterface $request, array $defaultParams = [], array $paramsCast = [], array $paramLimits = []): array
     {

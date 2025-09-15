@@ -4,10 +4,6 @@ namespace MatDave\ActivityPub\Controllers;
 
 class Home extends Base
 {
-    public function process(array $scriptProperties = []): void
-    {
-    }
-
     public function getPageTitle(): string
     {
         return $this->modx->lexicon('activitypub.home.page_title');
